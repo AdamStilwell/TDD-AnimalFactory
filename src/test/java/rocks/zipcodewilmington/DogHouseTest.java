@@ -2,8 +2,10 @@ package rocks.zipcodewilmington;
 
 import org.junit.Assert;
 import org.junit.Test;
+import rocks.zipcodewilmington.animals.Cat;
 import rocks.zipcodewilmington.animals.Dog;
 import rocks.zipcodewilmington.animals.animal_creation.AnimalFactory;
+import rocks.zipcodewilmington.animals.animal_storage.CatHouse;
 import rocks.zipcodewilmington.animals.animal_storage.DogHouse;
 
 import java.util.Date;
@@ -31,44 +33,44 @@ public class DogHouseTest {
 
     // TODO - Create tests for `void remove(Integer id)`
     @Test
-    public void removeDogByIDTest() {
+    public void testRemoveById() {
+        // Given
+        String name = "Fido";
+        Date birthDate = new Date();
+        Dog animal = AnimalFactory.createDog(name, birthDate);
+        DogHouse.clear();
 
+        // When
+        int id = animal.getId();
+        DogHouse.add(animal);
+        DogHouse.remove(id);
+        int expectedDogs = 0;
+        int actualDogs = DogHouse.getNumberOfDogs();
+
+        // Then
+        Assert.assertEquals(expectedDogs, actualDogs);
     }
     // TODO - Create tests for `void remove(Dog dog)`
     @Test
     public void removeDogTest(){
-        //Given
-        DogHouse.add(new Dog("Henry", null, 2));
-        //When
-        int expected = 0;
-        //Then
-        int actual = DogHouse.getNumberOfDogs();
-        Assert.assertEquals(expected, actual);
+        // Given
+        String name = "Fido";
+        Date birthDate = new Date();
+        Dog animal = AnimalFactory.createDog(name, birthDate);
+        DogHouse.clear();
+
+        // When
+        DogHouse.add(animal);
+        DogHouse.remove(animal);
+        int expectedDogs = 0;
+        int actualDogs = DogHouse.getNumberOfDogs();
+
+        // Then
+        Assert.assertEquals(expectedDogs, actualDogs);
     }
     // TODO - Create tests for `Dog getDogById(Integer id)`
     @Test
     public void getDogByIdTest(){
-        //Given
-        DogHouse.add(new Dog("Chip", null, 4));
-        //When
-
-        //Then
-    }
-    // TODO - Create tests for `Integer getNumberOfDogs()`
-    @Test
-    public void getNumberOfDogsTest(){
-        //Given
-        DogHouse.add(new Dog(null, null, null));
-        DogHouse.add(new Dog(null, null, null));
-        //When
-        Integer expected = 2;
-        //Then
-        Integer actual = DogHouse.getNumberOfDogs();
-        Assert.assertEquals(expected, actual);
-
-    }
-    @Test
-    public void testGetNumberOfDogs() {
         // Given (some
         String name = "Milo";
         Date birthDate = new Date();
@@ -77,8 +79,29 @@ public class DogHouseTest {
 
         // When
         DogHouse.add(animal);
+        int id = animal.getId();
+        Dog expectedId = animal;
+        Dog actualId = DogHouse.getDogById(id);
 
         // Then
-        DogHouse.getNumberOfDogs();
+        Assert.assertEquals(expectedId,actualId);
+    }
+    // TODO - Create tests for `Integer getNumberOfDogs()`
+    @Test
+    public void getNumberOfDogsTest(){
+        // Given (some
+        String name = "Milo";
+        Date birthDate = new Date();
+        Dog animal = AnimalFactory.createDog(name, birthDate);
+        DogHouse.clear();
+
+        // When
+        DogHouse.add(animal);
+        int expectedDogs = 1;
+        int actualDogs = DogHouse.getNumberOfDogs();
+
+        // Then
+        Assert.assertEquals(expectedDogs,actualDogs);
+
     }
 }
